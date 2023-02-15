@@ -21,17 +21,17 @@ const Titre4 = (props) => <h1 className="text-center">{props.content}</h1>
 
 // Création d'un composant Produit
 const Product = (props) => 
-    <div className="card m-3" style={{width: 15+'rem'}}>
+    <div className="card m-3" style={{width: 15+'rem', height: 18+'rem'}}>
         <div id={props.details.id} className="text-center">
             <img className="card-img-top" style={{height: 10+'rem'}} src={props.details.image} alt="Card image cap" />
-            <h5 className="card-title mt-3">{props.details.name}</h5>
+            <h5 className="card-title mt-2">{props.details.name}</h5>
             <p className="card-text">{props.details.price}</p>
-            <a href="#" onClick={props.handleAddBtn} className="btn btn-success mb-3">Add to cart</a>
+            <a onClick={props.handleAddBtn} className="btn btn-success">Add to cart</a>
         </div>
     </div>
 
 
-// Création d'un composant order
+// Création d'un composant Order
 const Order = (props) =>
 {
    return (
@@ -86,7 +86,6 @@ class App extends React.Component
     handleLessBtn = (e) =>
     {
         const clickedElementId = e.target.parentNode.id;
-        const clicked = this.state.products.find(element => element.id == clickedElementId);
         const copiedOrdered = [...this.state.ordered];
         const orderedProduct = copiedOrdered.find(element => element.id == clickedElementId);
 
@@ -111,21 +110,22 @@ class App extends React.Component
     {
         const productsList = this.state.products.map(product => 
                 <Product key={product.id} details={product} handleAddBtn={this.handleAddBtn}/>
-        )
+        );
 
         const orderedList = this.state.ordered.map(order =>
                 <Order key={order.id} details={order} handleAddBtn={this.handleAddBtn} handleLessBtn={this.handleLessBtn}/>
-            )
+        );
 
         return( 
             <div className="row">
-                <div className="col-6 mt-5 d-flex justify-content-center flex-wrap">
+                <div className="col-7 mt-5 d-flex justify-content-center flex-wrap">
                     {productsList}
                 </div>
-                <div className="col-6 mt-5 d-flex justify-content-center">
+                <div className="col-5 mt-5">
                     <div id="section">
-                        <h2 className="text-center mt-3">Your order</h2>
+                        <h2 className="text-center mt-3">Your order</h2><hr />              
                         {orderedList}
+                        <h4 className="ms-3 position-relative fixed-bottom">Your total:</h4>
                     </div>                       
                 </div>
             </div>
