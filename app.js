@@ -125,7 +125,7 @@ class App extends React.Component
                     <div id="section">
                         <h2 className="text-center mt-3">Your order</h2><hr />              
                         {orderedList}
-                        <h4 className="ms-3 position-relative fixed-bottom">Your total:</h4>
+                        <h4 className="ms-3 mt-5">Your total:</h4>
                     </div>                       
                 </div>
             </div>

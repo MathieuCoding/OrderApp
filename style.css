@@ -30,7 +30,7 @@ body{
 
 #section {
     width: 80%;
-    min-height: 75vh;
+    min-height: 50vh;
     border: 1px solid green;
     background-color: #fafafa;
 }
