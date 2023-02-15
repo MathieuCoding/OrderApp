@@ -22,35 +22,30 @@ const Titre4 = (props) => <h1 className="text-center">{props.content}</h1>
 // Création d'un composant Produit
 const Product = (props) => 
     <div className="card m-3" style={{width: 15+'rem'}}>
-        <div className="text-center">
+        <div id={props.details.id} className="text-center">
             <img className="card-img-top" style={{height: 10+'rem'}} src={props.details.image} alt="Card image cap" />
             <h5 className="card-title mt-3">{props.details.name}</h5>
             <p className="card-text">{props.details.price}</p>
-            <a href="#" onClick={props.handleClick} className="btn btn-success mb-3">Order</a>
+            <a href="#" onClick={props.handleAddBtn} className="btn btn-success mb-3">Add to cart</a>
         </div>
     </div>
 
 
-// Création d'un composant section
-const MySection = () =>
-{
-   return (
-       <div id="section">
-            <h2 className="text-center mt-3">Your order</h2>
-            <OrderProduct />
-       </div>
-   );
-}
-
-
 // Création d'un composant order
-const OrderProduct = () =>
+const Order = (props) =>
 {
    return (
-       <p>manger des burgers</p>
+    <div className="row mb-2 mt-5">
+        <div className="col-5 ps-5">{props.details.name}</div>
+        <div className="col-3">{props.details.price}</div>
+        <div className="col-4" id={props.details.id}>
+            <button onClick={props.handleLessBtn} className="btn btn-warning fa-solid fa-minus me-2"></button>{props.details.quantity}
+            <button onClick={props.handleAddBtn} className="btn btn-warning fa-solid fa-plus ms-2"></button>
+        </div>
+    </div>
+
    );
 }
-
 
 // Composant dans une classe
 class App extends React.Component 
@@ -60,31 +55,78 @@ class App extends React.Component
             {id: 1, name: "Cheeseburger", price: 5.95, image: "https:images.unsplash.com/photo-1572802419224-296b0aeee0d9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=815&q=80"},
             {id: 2, name: "CBO", price: 8.95, image: "https://images.unsplash.com/photo-1615297928064-24977384d0da?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=812&q=80"},
             {id: 3, name: "Filet-O-Fish", price: 3.95, image: "https://images.unsplash.com/photo-1520073201527-6b044ba2ca9f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=412&q=80"}
-        ]
+        ],
+        ordered: []
     }
 
-    handleClick = (e) => 
+    handleAddBtn = (e) => 
     {
-        console.log(e.target.parentNode); // Renvoie la div entière
+        const clickedElementId = e.target.parentNode.id;
+        const clicked = this.state.products.find(element => element.id == clickedElementId);
 
-        const item = document.createElement("div");
-        item.classList.add('w-75');
+        //this.state.ordered.push(clicked); Possible mais ne provoque pas de rerender
+        // Pour cela il faut ituliser setState
+        // D'abord on crée une copie du taleau à modifier soit avec slice()
+        // const copiedOrdered = this.state.ordered.slice();
+        // Soit avec le spread operator ...
+        const copiedOrdered = [...this.state.ordered];
+        // On lui ajoute notre élément
+        const orderedProduct = copiedOrdered.find(element => element.id == clickedElementId);
 
+        if (!orderedProduct)
+        {
+            clicked.quantity = 1;
+            copiedOrdered.push(clicked); //On ajoute un élément au tableau copié
+        } else {
+            orderedProduct.quantity ++;
+        }
+        this.setState({ordered: copiedOrdered});
     }
+
+    handleLessBtn = (e) =>
+    {
+        const clickedElementId = e.target.parentNode.id;
+        const clicked = this.state.products.find(element => element.id == clickedElementId);
+        const copiedOrdered = [...this.state.ordered];
+        const orderedProduct = copiedOrdered.find(element => element.id == clickedElementId);
+
+
+        if (orderedProduct.quantity > 1)     
+        {
+            orderedProduct.quantity --;
+            this.setState({ordered: copiedOrdered});
+        } else {
+            const result = copiedOrdered.filter(item => item.id != clickedElementId);
+            this.setState({ordered: result});
+        }
+       
+        
+    }
+
+
+
+    
 
     render() 
     {
         const productsList = this.state.products.map(product => 
-                <Product key={product.id} details={product} handleClick={this.handleClick}/>
+                <Product key={product.id} details={product} handleAddBtn={this.handleAddBtn}/>
         )
 
+        const orderedList = this.state.ordered.map(order =>
+                <Order key={order.id} details={order} handleAddBtn={this.handleAddBtn} handleLessBtn={this.handleLessBtn}/>
+            )
+
         return( 
-            <div class="row">
+            <div className="row">
                 <div className="col-6 mt-5 d-flex justify-content-center flex-wrap">
                     {productsList}
                 </div>
                 <div className="col-6 mt-5 d-flex justify-content-center">
-                <MySection />
+                    <div id="section">
+                        <h2 className="text-center mt-3">Your order</h2>
+                        {orderedList}
+                    </div>                       
                 </div>
             </div>
         )
