@@ -16,24 +16,40 @@ const titre3 = <h1 className="text-center">Hello World of JSX !</h1>
 const Titre4 = (props) => <h1 className="text-center">{props.content}</h1> 
 
 
-// Création d'un composant boutton
-function MyButton()
-{
-   return (
-       <button className="btn btn-primary">maFonction</button>
-   );
-}
+
+
 
 // Création d'un composant Produit
 const Product = (props) => 
-    <div className="card mt-3" style={{width: 18+'rem'}}>
-        <div className="card-bod text-center">
-            <img className="card-img-top" style={{height: 15+'rem'}} src={props.details.image} alt="Card image cap" />
+    <div className="card m-3" style={{width: 15+'rem'}}>
+        <div className="text-center">
+            <img className="card-img-top" style={{height: 10+'rem'}} src={props.details.image} alt="Card image cap" />
             <h5 className="card-title mt-3">{props.details.name}</h5>
             <p className="card-text">{props.details.price}</p>
-            <a href="#" onClick={props.handleClick} className="btn btn-success mb-3">More details</a>
+            <a href="#" onClick={props.handleClick} className="btn btn-success mb-3">Order</a>
         </div>
     </div>
+
+
+// Création d'un composant section
+const MySection = () =>
+{
+   return (
+       <div id="section">
+            <h2 className="text-center mt-3">Your order</h2>
+            <OrderProduct />
+       </div>
+   );
+}
+
+
+// Création d'un composant order
+const OrderProduct = () =>
+{
+   return (
+       <p>manger des burgers</p>
+   );
+}
 
 
 // Composant dans une classe
@@ -50,6 +66,10 @@ class App extends React.Component
     handleClick = (e) => 
     {
         console.log(e.target.parentNode); // Renvoie la div entière
+
+        const item = document.createElement("div");
+        item.classList.add('w-75');
+
     }
 
     render() 
@@ -59,14 +79,14 @@ class App extends React.Component
         )
 
         return( 
-            <React.Fragment>
-                <div className="container mt-5">
+            <div class="row">
+                <div className="col-6 mt-5 d-flex justify-content-center flex-wrap">
                     {productsList}
                 </div>
-                <div className="container d-flex justify-content-center mt-5">
-                <MyButton />
+                <div className="col-6 mt-5 d-flex justify-content-center">
+                <MySection />
                 </div>
-            </React.Fragment>
+            </div>
         )
     }
 }

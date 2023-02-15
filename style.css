@@ -1,0 +1,35 @@
+*,
+*:before,
+*:after{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background: linear-gradient(
+        15deg,
+        hsl(0deg 88% 44%) 0%,
+        hsl(10deg 94% 44%) 7%,
+        hsl(16deg 100% 44%) 14%,
+        hsl(20deg 100% 45%) 21%,
+        hsl(23deg 100% 45%) 29%,
+        hsl(26deg 100% 46%) 36%,
+        hsl(29deg 100% 47%) 43%,
+        hsl(31deg 100% 48%) 50%,
+        hsl(34deg 100% 48%) 57%,
+        hsl(36deg 100% 49%) 64%,
+        hsl(39deg 100% 49%) 71%,
+        hsl(41deg 100% 49%) 79%,
+        hsl(44deg 100% 50%) 86%,
+        hsl(46deg 100% 50%) 93%,
+        hsl(49deg 100% 50%) 100%
+      );
+}
+
+#section {
+    width: 80%;
+    height: 100vh;
+    border: 1px solid green;
+    background-color: #fafafa;
+}
