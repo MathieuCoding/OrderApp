@@ -42,10 +42,20 @@ const Order = (props) =>
             <button onClick={props.handleLessBtn} className="btn btn-warning fa-solid fa-minus me-2"></button>{props.details.quantity}
             <button onClick={props.handleAddBtn} className="btn btn-warning fa-solid fa-plus ms-2"></button>
         </div>
+        {/* <h4 className="ms-3 mt-5">Your total: {props.detail.total}</h4> */}
     </div>
 
    );
 }
+
+// Création d'un composant Total
+// const Total = (props) =>
+// {
+//     return (
+//         <h4 className="ms-3 mt-5">Your total: {props.detail.total}</h4> 
+//     )
+    
+// }
 
 // Composant dans une classe
 class App extends React.Component 
@@ -76,11 +86,18 @@ class App extends React.Component
         if (!orderedProduct)
         {
             clicked.quantity = 1;
+            clicked.total = clicked.price;
             copiedOrdered.push(clicked); //On ajoute un élément au tableau copié
         } else {
             orderedProduct.quantity ++;
+            orderedProduct.total += orderedProduct.price;
+            const totalOrder = copiedOrdered.map(order => order.total).reduce((a, b) => a + b);
+            orderedProduct.total = totalOrder;
+            console.log(orderedProduct.total);
         }
         this.setState({ordered: copiedOrdered});
+        // console.log(copiedOrdered[0]['total']);
+
     }
 
     handleLessBtn = (e) =>
@@ -93,6 +110,7 @@ class App extends React.Component
         if (orderedProduct.quantity > 1)     
         {
             orderedProduct.quantity --;
+            orderedProduct.total -= orderedProduct.price;
             this.setState({ordered: copiedOrdered});
         } else {
             const result = copiedOrdered.filter(item => item.id != clickedElementId);
@@ -100,11 +118,11 @@ class App extends React.Component
         }
        
         
+        
     }
 
 
 
-    
 
     render() 
     {
@@ -125,8 +143,7 @@ class App extends React.Component
                     <div id="section">
                         <h2 className="text-center mt-3">Your order</h2><hr />              
                         {orderedList}
-                        <h4 className="ms-3 mt-5">Your total:</h4>
-                    </div>                       
+                    </div>     
                 </div>
             </div>
         )
