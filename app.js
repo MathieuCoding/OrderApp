@@ -42,29 +42,29 @@ const Order = (props) =>
             <button onClick={props.handleLessBtn} className="btn btn-warning fa-solid fa-minus me-2"></button>{props.details.quantity}
             <button onClick={props.handleAddBtn} className="btn btn-warning fa-solid fa-plus ms-2"></button>
         </div>
-        {/* <h4 className="ms-3 mt-5">Your total: {props.detail.total}</h4> */}
     </div>
 
    );
 }
 
 // Création d'un composant Total
-// const Total = (props) =>
-// {
-//     return (
-//         <h4 className="ms-3 mt-5">Your total: {props.detail.total}</h4> 
-//     )
+const OrderSum = (props) =>
+{
+    return (
+        <h4 className="ms-3 mt-5">Your total: {props.details.total}</h4> 
+    )
     
-// }
+}
+
 
 // Composant dans une classe
 class App extends React.Component 
 {
     state = {
         products: [
-            {id: 1, name: "Cheeseburger", price: 5.95, image: "https:images.unsplash.com/photo-1572802419224-296b0aeee0d9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=815&q=80"},
-            {id: 2, name: "CBO", price: 8.95, image: "https://images.unsplash.com/photo-1615297928064-24977384d0da?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=812&q=80"},
-            {id: 3, name: "Filet-O-Fish", price: 3.95, image: "https://images.unsplash.com/photo-1520073201527-6b044ba2ca9f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=412&q=80"}
+            {id: 1, name: "Cheeseburger", price: 1, image: "https:images.unsplash.com/photo-1572802419224-296b0aeee0d9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=815&q=80"},
+            {id: 2, name: "CBO", price: 2, image: "https://images.unsplash.com/photo-1615297928064-24977384d0da?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=812&q=80"},
+            {id: 3, name: "Filet-O-Fish", price: 3, image: "https://images.unsplash.com/photo-1520073201527-6b044ba2ca9f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=412&q=80"}
         ],
         ordered: []
     }
@@ -73,10 +73,9 @@ class App extends React.Component
     {
         const clickedElementId = e.target.parentNode.id;
         const clicked = this.state.products.find(element => element.id == clickedElementId);
-
         //this.state.ordered.push(clicked); Possible mais ne provoque pas de rerender
         // Pour cela il faut ituliser setState
-        // D'abord on crée une copie du taleau à modifier soit avec slice()
+        // D'abord on crée une copie du tableau à modifier soit avec slice()
         // const copiedOrdered = this.state.ordered.slice();
         // Soit avec le spread operator ...
         const copiedOrdered = [...this.state.ordered];
@@ -87,13 +86,15 @@ class App extends React.Component
         {
             clicked.quantity = 1;
             clicked.total = clicked.price;
+            // console.log(b);
             copiedOrdered.push(clicked); //On ajoute un élément au tableau copié
         } else {
             orderedProduct.quantity ++;
             orderedProduct.total += orderedProduct.price;
-            const totalOrder = copiedOrdered.map(order => order.total).reduce((a, b) => a + b);
-            orderedProduct.total = totalOrder;
-            console.log(orderedProduct.total);
+            let result = copiedOrdered.map(order => order.total).reduce((a, b) => a + b);
+            console.log(result);
+            // orderedProduct.total = copiedOrdered.map(order => order.total).reduce((a, b) => a + b);           
+            // console.log(orderedProduct.total);
         }
         this.setState({ordered: copiedOrdered});
         // console.log(copiedOrdered[0]['total']);
@@ -134,6 +135,10 @@ class App extends React.Component
                 <Order key={order.id} details={order} handleAddBtn={this.handleAddBtn} handleLessBtn={this.handleLessBtn}/>
         );
 
+        const total = this.state.ordered.map(order =>
+            <OrderSum key={order.id} details={order} handleAddBtn={this.handleAddBtn} handleLessBtn={this.handleLessBtn}/>
+    ); 
+
         return( 
             <div className="row">
                 <div className="col-7 mt-5 d-flex justify-content-center flex-wrap">
@@ -143,6 +148,7 @@ class App extends React.Component
                     <div id="section">
                         <h2 className="text-center mt-3">Your order</h2><hr />              
                         {orderedList}
+                        {total}
                     </div>     
                 </div>
             </div>
