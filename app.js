@@ -25,7 +25,7 @@ const Product = (props) =>
         <div id={props.details.id} className="text-center">
             <img className="card-img-top" style={{height: 10+'rem'}} src={props.details.image} alt="Card image cap" />
             <h5 className="card-title mt-2">{props.details.name}</h5>
-            <p className="card-text">{props.details.price}</p>
+            <p className="card-text m-2">{props.details.price}</p>
             <a onClick={props.handleAddBtn} className="btn btn-success">Add to cart</a>
         </div>
     </div>
