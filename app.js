@@ -51,7 +51,7 @@ const Order = (props) =>
 const OrderSum = (props) =>
 {
     return (
-        <h4 className="ms-3 mt-5">Your total: {props.details.total}</h4> 
+        <h4 className="ms-3 mt-5">Your total: {props.details.orderTotal}</h4> 
     )
     
 }
@@ -91,13 +91,12 @@ class App extends React.Component
         } else {
             orderedProduct.quantity ++;
             orderedProduct.total += orderedProduct.price;
-            let result = copiedOrdered.map(order => order.total).reduce((a, b) => a + b);
-            console.log(result);
-            // orderedProduct.total = copiedOrdered.map(order => order.total).reduce((a, b) => a + b);           
-            // console.log(orderedProduct.total);
+            // let result = copiedOrdered.map(order => order.total).reduce((a, b) => a + b);
+            // console.log(result);
+            orderedProduct.orderTotal = copiedOrdered.map(order => order.total).reduce((a, b) => a + b);           
         }
         this.setState({ordered: copiedOrdered});
-        // console.log(copiedOrdered[0]['total']);
+        console.log(orderedProduct);
 
     }
 
