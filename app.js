@@ -21,7 +21,7 @@ const Titre4 = (props) => <h1 className="text-center">{props.content}</h1>
 
 // Création d'un composant Produit
 const Product = (props) => 
-    <div className="card m-3" style={{width: 15+'rem', height: 18+'rem'}}>
+    <div className="card m-2 border border-success" style={{width: 15+'rem', height: 18+'rem'}}>
         <div id={props.details.id} className="text-center">
             <img className="card-img-top" style={{height: 10+'rem'}} src={props.details.image} alt="Card image cap" />
             <h5 className="card-title mt-2">{props.details.name}</h5>
@@ -51,7 +51,7 @@ const Order = (props) =>
 const OrderSum = (props) =>
 {
     return (
-        <h4 className="ms-3 mt-5">Your total: {props.details.orderTotal}</h4> 
+        <h4 className="ms-3 mt-5">Your total: {props.details.orderTotal}€</h4> 
     )
     
 }
@@ -64,7 +64,7 @@ class App extends React.Component
         products: [
             {id: 1, name: "Cheeseburger", price: 1, image: "https:images.unsplash.com/photo-1572802419224-296b0aeee0d9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=815&q=80"},
             {id: 2, name: "CBO", price: 2, image: "https://images.unsplash.com/photo-1615297928064-24977384d0da?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=812&q=80"},
-            {id: 3, name: "Filet-O-Fish", price: 3, image: "https://images.unsplash.com/photo-1520073201527-6b044ba2ca9f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=412&q=80"}
+            {id: 3, name: "Filet-O-Fish", price: 3, image: "https://cdn.pixabay.com/photo/2017/07/11/09/21/outback-2492925_960_720.jpg"}
         ],
         ordered: []
     }
@@ -120,9 +120,6 @@ class App extends React.Component
         
         
     }
-
-
-
 
     render() 
     {

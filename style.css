@@ -7,7 +7,7 @@
 }
 
 body{
-    min-height: 100vh;
+    min-height: 98vh;
     background: linear-gradient(
         15deg,
         hsl(0deg 88% 44%) 0%,
@@ -31,6 +31,7 @@ body{
 #section {
     width: 80%;
     min-height: 50vh;
-    border: 1px solid green;
+    border: 15px solid green;
+    border-radius: 15px;
     background-color: #fafafa;
 }
