@@ -16,7 +16,7 @@ const titre3 = <h1 className="text-center">Hello World of JSX !</h1>
 const Titre4 = (props) => <h1 className="text-center">{props.content}</h1> 
 
 
-
+ // ================================================== Burger & Co ============================================================
 
 
 // Création d'un composant Produit
@@ -47,24 +47,14 @@ const Order = (props) =>
    );
 }
 
-// Création d'un composant Total
-const OrderSum = (props) =>
-{
-    return (
-        <h4 className="ms-3 mt-5">Your total: {props.details.orderTotal}€</h4> 
-    )
-    
-}
-
-
 // Composant dans une classe
 class App extends React.Component 
 {
     state = {
         products: [
-            {id: 1, name: "Cheeseburger", price: 1, image: "https:images.unsplash.com/photo-1572802419224-296b0aeee0d9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=815&q=80"},
-            {id: 2, name: "CBO", price: 2, image: "https://images.unsplash.com/photo-1615297928064-24977384d0da?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=812&q=80"},
-            {id: 3, name: "Filet-O-Fish", price: 3, image: "https://cdn.pixabay.com/photo/2017/07/11/09/21/outback-2492925_960_720.jpg"}
+            {id: 1, name: "Cheeseburger", price: 4.95, image: "https:images.unsplash.com/photo-1572802419224-296b0aeee0d9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=815&q=80"},
+            {id: 2, name: "CBO", price: 6.5, image: "https://images.unsplash.com/photo-1615297928064-24977384d0da?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=812&q=80"},
+            {id: 3, name: "Filet-O-Fish", price: 5.5, image: "https://cdn.pixabay.com/photo/2017/07/11/09/21/outback-2492925_960_720.jpg"}
         ],
         ordered: []
     }
@@ -86,17 +76,13 @@ class App extends React.Component
         {
             clicked.quantity = 1;
             clicked.total = clicked.price;
-            // console.log(b);
             copiedOrdered.push(clicked); //On ajoute un élément au tableau copié
         } else {
             orderedProduct.quantity ++;
             orderedProduct.total += orderedProduct.price;
-            // let result = copiedOrdered.map(order => order.total).reduce((a, b) => a + b);
-            // console.log(result);
             orderedProduct.orderTotal = copiedOrdered.map(order => order.total).reduce((a, b) => a + b);           
         }
         this.setState({ordered: copiedOrdered});
-        console.log(orderedProduct);
 
     }
 
@@ -131,9 +117,13 @@ class App extends React.Component
                 <Order key={order.id} details={order} handleAddBtn={this.handleAddBtn} handleLessBtn={this.handleLessBtn}/>
         );
 
-        const total = this.state.ordered.map(order =>
-            <OrderSum key={order.id} details={order} handleAddBtn={this.handleAddBtn} handleLessBtn={this.handleLessBtn}/>
-    ); 
+
+        let total = 0;
+        if (this.state.ordered.length > 0) 
+        {
+            total = this.state.ordered.map(order => order.total).reduce((a, b) => a + b);
+        }
+
 
         return( 
             <div className="row">
@@ -144,7 +134,7 @@ class App extends React.Component
                     <div id="section">
                         <h2 className="text-center mt-3">Your order</h2><hr />              
                         {orderedList}
-                        {total}
+                        <h4 className="ms-3 mt-5">Your total: {total}€</h4>
                     </div>     
                 </div>
             </div>
