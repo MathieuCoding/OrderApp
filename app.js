@@ -36,9 +36,9 @@ const Order = (props) =>
 {
    return (
     <div className="row mb-2 mt-5">
-        <div className="col-5 ps-5">{props.details.name}</div>
-        <div className="col-3">{props.details.price}</div>
-        <div className="col-4" id={props.details.id}>
+        <div className="col-4 ps-4">{props.details.name}</div>
+        <div className="col-2">{props.details.price}</div>
+        <div className="col-5" id={props.details.id}>
             <button onClick={props.handleLessBtn} className="btn btn-warning fa-solid fa-minus me-2"></button>{props.details.quantity}
             <button onClick={props.handleAddBtn} className="btn btn-warning fa-solid fa-plus ms-2"></button>
         </div>
@@ -121,7 +121,7 @@ class App extends React.Component
         let total = 0;
         if (this.state.ordered.length > 0) 
         {
-            total = this.state.ordered.map(order => order.total).reduce((a, b) => a + b);
+            total = this.state.ordered.map(order => order.total).reduce((a, b) => a + b).toFixed(2);
         }
 
 
